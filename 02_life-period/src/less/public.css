@@ -1,0 +1,27 @@
+body {
+  font-size: 14px;
+  font-family: 微软雅黑;
+  color: #fff;
+  background: url(../img/1.jpg) repeat-x;
+}
+.specil {
+  width: 200px;
+  border: 2px solid #f00;
+  background-color: #090;
+}
+#app {
+  background-color: #ff0;
+  color: #fff;
+  color: #f00;
+}
+.specil img {
+  width: 200px;
+}
+@font-face {
+  font-family: "austie_bost_wibbly-webfont";
+  src: url("../fonts/austie_bost_wibbly-webfont.ttf") format("truetype"), url("../fonts/austie_bost_wibbly-webfont.woff2") format("woff2"), url("../fonts/austie_bost_wibbly-webfont.woff") format("woff"), url("../fonts/austie_bost_wibbly-webfont.eot") format("embedded-opentype");
+}
+span {
+  font-family: "austie_bost_wibbly-webfont";
+  font-size: 30px;
+}
