@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App3";
+import App from "./App";
 ReactDOM.render(// 调用App函数，这里的render：是把我们App渲染完生成的DOM对象innerHTML到我们的挂载点中
     <App />,// 渲染App组件，相当于new App()
     document.getElementById("app")

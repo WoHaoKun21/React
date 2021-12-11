@@ -9,7 +9,21 @@
 <body>
                             第二章：React组件
     一、React简介：
-        React组件将UI分割成独立的可复用的片段，这些片段都有各自隔离的作用域，不会互相干扰
+            React组件将UI分割成独立的可复用的片段，这些片段都有各自隔离的作用域，不会互相干扰，
+        可以将组件理解为类似函数的概念，组件从它的props属性接收参数
+
+    二、React组件分类：都要学
+        1、函数式无状态组件/静态组件——所有版本都支持：现在的新项目在使用(无状态组件+hooks)
+        2、类组件：新老项用到，老项目偏多
+            ①：ES5原生方式React.createClass定义的组件 react 16不支持
+            ②：ES6形式的extends React.Component定义的组件 react 16支持
+
+    三、props state说明
+        Props 属性：组件对外的接口 { name:"tom" } <App name="tom"/>
+        state 状态：组件对内接口，组件自身状态改变，就是修改了state，也就是this.state
+      说明：想要自己重新render，就改变自己的this.state；
+            别人想让我改变，改变这个组件的props/this.props
+
         
 </body>
 </html>
