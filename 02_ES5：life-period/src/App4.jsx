@@ -1,4 +1,6 @@
 import React from "react";
+import ReactDOM from "react-dom";
+import Child from "./Child";
 const App = React.createClass({
     getDefaultProps: function () {
         alert("App getDefaultProps 1");
@@ -18,11 +20,14 @@ const App = React.createClass({
         alert("App componentWillMount 3");
         // 挂在前操作——后面就废弃了
     },
-    handleClick:function(){
+    handleClick:function(){// 创建的函数
         // 修改this.state，只能通过异步方法this.setState()才可以
         this.setState({
             name:"jarry"
         })
+    },
+    handleClick2:function(){
+        ReactDOM.unmountComponentAtNode(document.getElementById("app"))
     },
     render: function () {
         alert("App render 4/8");
@@ -38,6 +43,10 @@ const App = React.createClass({
                     console.dir(document.getElementById("p1"))// 这里打印的是null
                 }
                 <button onClick={this.handleClick}>点击改变this.state值</button>
+                <hr />
+                <Child z={100}/>
+                <hr />
+                <button onClick={this.handleClick2}>卸载App组件</button>
             </div>
         );
     },
@@ -50,24 +59,19 @@ const App = React.createClass({
     shouldComponentUpdate:function(x,y){// 覆盖了父类的同名方法，用来进行组件优化
         // 传入的两个参数分别是，nextProps和nextState
         console.log(x,y);
+        alert("App shouldComponentUpdate 7");
         // 比较算法判断，如果nextProps和this.props不同，返回true，相同返回false
         // 比较算法判断，如果nextState和this.states不同，返回true，相同返回false
-        if(this.props===x){
             return true;
-        }else{
-            return false;
-        }
-        // if(this.state===y){
-        //     return false;
-        // }else{
-        //     return true;
-        // }
     },
     componentWillUpdate:function(){
         alert("App componentWillUpdate 8");
     },
     componentDidUpdate:function(){
         alert("App componentDidUpdate 9");
+    },
+    componentWillUnmount:function(){
+        alert("App componentWillUnmount 10");
     }
 });
 export default App;

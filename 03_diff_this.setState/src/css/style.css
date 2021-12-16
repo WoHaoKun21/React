@@ -1,0 +1,17 @@
+div{/* 标签选择器不可用 */
+    background: #ff0;
+}
+h3#app{
+    border: 10px solid #f00;
+    background: #f0f;
+}
+img{
+    width: 200px;
+}
+.specil{
+    background: #09f;
+    color: #fff;
+}
+.one{
+    background: #090;
+}

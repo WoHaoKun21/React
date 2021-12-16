@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React第二章：组件</title>
+    <script>
+        // 练习ES6继承：
+        // 创建爱你父类：
+        class Person{
+            // 在父类里面添加属性：
+            constructor(name,gender,age){
+                this.name=name,
+                this.gender=gender,
+                this.age=age
+            }
+            // 添加父类方法：
+            eat(){
+                alert("人类都会吃");
+            }
+        }
+        // 实例化一个父类对象：
+        let p1 = new Person("石鹏飞","男",21);
+        console.log(p1);
+        // 创建子类，并继承父类的属性及方法
+        class Child extends Person{// 继承了父类元素上的原型方法
+            constructor(name,gender,age,sno,sdet){
+                super(name,gender,age);// 调用父类构造器函数，为创建的子类元素添加父类的属性
+                this.sno = sno;
+                this.sdet = sdet;
+            }
+            study(){
+                alert("Child的原型上的方法");
+            }
+        }
+        // 实例化一个继承出来的对象
+        let c1 = new Child("迪迦","男",3000,1001,"光系战士");
+        console.log(c1);
+    </script>
+</head>
+<body>
+                            第二章：React组件
+    一、React简介：
+            React组件将UI分割成独立的可复用的片段，这些片段都有各自隔离的作用域，不会互相干扰，
+        可以将组件理解为类似函数的概念，组件从它的props属性接收参数
+
+    二、React组件分类：都要学
+        1、函数式无状态组件/静态组件——所有版本都支持：现在的新项目在使用(无状态组件+hooks)
+        2、类组件：新老项用到，老项目偏多
+            ①：ES5原生方式React.createClass定义的组件 react 16不支持
+            ②：ES6形式的extends React.Component定义的组件 react 16支持
+
+    三、props state说明
+        Props 属性：组件对外的接口 { props.name:"tom" } <App name="tom"/>
+        state 状态：组件对内接口，组件自身状态改变，就是修改了state，也就是this.state
+      说明：想要自己重新render，就改变自己的this.state；
+            别人想让我改变，改变这个组件的props/this.props
+
+    四、函数式无状态组件/静态组件
+        三无：
+            1、无this   this指向undefined
+            2、无state  没有状态
+            3、无生命周期方法
+        
+    五、子组件：在一个组件中渲染的组件就是子组件
+        funtion Zujian(){
+            return(
+                <div>
+                    <Child /> // Child就是子组件
+                </div>
+            );
+        }
+
+    六、类组件
+        1、ES5方式创建类组件——react@16不支持
+            学习的原因：
+                (1)老项目的维护
+                (2)更好的学习生命组件的生命周期方法
+              说明：ES5中是没有类的概念的
+        2、ES6方式创建类组件——react@16+支持
+
+    七、组件生命周期(lifeCycle)方法：在组建挂载(创建)、更新、卸载过程中按照固定顺序自动调用的钩子函数——hock函数
+ 
+    八、组件生命周期方法
+        分为三个阶段
+            第一阶段：初始化阶段/挂载阶段——mounted
+                ①：getDefaultProps()：初始化this.props，如果和<组件 属性="值"/>发生冲突，name被覆盖
+                ②：getInitialState()：初始化this.state
+                ③：componentWillMount：挂在前——后面的版本废弃了
+                ④：render：挂载——进行模板计算：jsx——>babel-loader——>虚拟DOM——>方法调用完返回真实DOM
+                    说明：render中无法得到真实DOM对象
+                ⑤：componentDidMount：挂载后
+                    说明：获取真实DOM对象、操纵真实DOM对象、执行ajax
+            第二阶段：更新阶段——update：props/this.props和this.state发生改变
+                ⑥：componentWillReceiveProps：将要接受新的props
+                ⑦：shouldComponentUpdate：判断是否进入更新阶段——
+                    说明：父类中的shouldComponentUpdate并没有具体实现这个方法功能，不管this.porps和this.state是否
+                          发生改变，都会返回true，并进入更新阶段
+    ————————————————>面试题：shouldComponentUpdate这个方法是干什么用呢？
+                    答：1、ES6可以使用PureComponent实现对象浅层比较，对组件进行性能优化——开发中使用较多
+                        2、可以自己写算法实现shouldComponentUpdate方法，对组件进行优化！
+                ⑧：componentWillUpdate：将要进行更新
+                    再次调用render——上面的第四步
+                ⑨：componentDidUpdate：更新完成
+            第三阶段：卸载阶段——unmounted
+                ⑩：componentWillWillUnmount：将要卸载组件
+
+    九、如何创建组件ES5：
+        React.createClass({
+            方法2:function(){},
+            方法2:function(){}
+        })
+        创建的类从React父类继承了三个属性和10个生命周期方法
+        三个属性：都是只读的
+            --this.props对外接口    谁让我从新render，谁给我传改变了的this.props
+            --this.state对内接口    自己想要从新render
+                ——如果想修改this.state值，只能通过异步方法this.setState()
+            --this.refs DOM对象的集合{ref值:真实DOM对象,ref值:真实DOM对象}
+        十个生命周期方法
+
+    十、React中的事件不是JS原生事件，是对原生事件进行封装后的
+        1、     JS原生事件                  React事件
+                onclick                     onClick
+                onchange                    onChange——相当于原生oninput
+
+    十一、React中如何获取真实DOM对象？
+        1、如果获取的是触发事件的这个DOM对象——使用事件对象.target
+        2、通过ref属性获取
+            {ref属性名:DOM对象,ref属性名:DOM对象}
+            this.refs.ref属性名获取DOM对象
+        3、原生代码获取：不推荐
+
+
+
+
+</body>
+</html>

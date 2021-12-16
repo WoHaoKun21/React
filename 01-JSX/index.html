@@ -7,12 +7,11 @@
     <title>React视频讲堂</title>
 </head>
 <body>
-
     --大中型公司主流技术：
         1、React技术栈；
         2、Vue技术栈
       优势：组件化、模块化开发，将UI或功能分割成更小的代码片段(组件)，可以实现代码的高度服用，开发和维护效率较高，成本低！
-                                        
+
                                     第一章：React入门
     一、React简介：
         1、React起源于Facebook的内部项目，用来架设Instagram的网站，并与2013年5月开源
@@ -68,7 +67,12 @@
                 return true(元素保留)/false(元素删除)
             })
 
-    
+    十一、属性类型检查：
+        问题：父给子组件传递数据，对this.props数据进行类型检查——能够减少错误发生
+            子组件想要number类型，结果不小心给了string类型造成了BUG
+          React@15.5以前版本 Prop-types 内置到React里面；
+          React@15.5以后版本，包括15.5版本 prop-types不在内置到React，成为了第三方包
+
 
 
 

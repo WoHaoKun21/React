@@ -1,0 +1,39 @@
+$value:200px;
+body{
+    font-size: 14px;
+    font-family: 微软雅黑;
+    color: #fff;
+}
+div#app{
+    background-color: #ff0;
+    color: #fff;
+    width: 400px;
+    height: 400px;
+}
+div#app div{
+    width: $value;
+    height: $value;
+    background-color: #090;
+}
+h1{
+    color: #f00;
+}
+body{
+    font-size: 14px;
+    font-family: 微软雅黑;
+    color: #fff;
+}
+div#app{
+    background-color: #00f;
+    color: #fff;
+    width: 400px;
+    height: 400px;
+}
+div#app div{
+    width: $value;
+    height: $value;
+    background-color: #f0f;
+}
+h1{
+    color: #f00;
+}
