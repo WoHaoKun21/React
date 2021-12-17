@@ -1,47 +1,34 @@
-import React from "react";
-const Child = React.createClass({
-    // propTypes:{
-    //     // 规定this.props.z给的属性必须是number类型，还必须给出
-    //     z:React.PropTypes.number.isRequired// 要求给的数据类型必须是number类型
-    // },
-    getDefaultProps:function(){
-        alert("Child getDefaultProps 1");
-        return {
-            x:100
-        }
-    },
-    getInitialState:function(){
-        alert("Child getInitialState 2");
-        return {
-            y:200
-        }
-    },
-    componentWillMount:function(){
-        alert("Child componentWillMount 3");
-    },
-    render:function(){
-        alert("Child render 4/8");
+import React, { Component } from "react";
+export default class Child extends Component {
+    UNSAFE_componentWillMount() {
+        alert("Child UNSAFE_componentWillMount 1");
+    }
+    render() {
+        alert("Child render 2");
+        let { name } = this.props;
         return (
             <div>
                 <h3>Child组件</h3>
-                <p>Child this.props：{this.props.x}</p>
-                <p>Child this.state：{this.state.y}</p>
-                <p>父组件传递过来的this.props：{this.props.z}</p>
+                <p>父组件接受的名字：{name}</p>
             </div>
         );
-    },
-    componentDidMount:function(){
-        alert("Child componentDidMount 5");
-    },
-    componentWillReceiveProps:function(nextProps){
-        alert("Child componentWillReceiveProps 6");
-    },
-    shouldComponentUpdate:function(){
-        alert("Child shouldComponentUpdate 7");
-        return true;
-    },
-    componentWillUpdate:function(){
-        alert("Child componentWillUpdate 8");
+    };
+    componentDidMount() {
+        alert("Child componentDidMount 3");
     }
-});
-export default Child;
+    //将要接受的props
+    UNSAFE_componentWillReceiveProps(){
+        alert("Child UNSAFE_componentWillReceiveProps 4");
+    }
+    // shouldComponentUpdate(nextProps,nextState){
+    //     alert("Child shouldComponentUpdate 5");
+    //     console.log(nextProps);
+    //     return true;
+    // }
+    UNSAFE_componentWillUpdate(){
+        alert("Child UNSAFE_componentWillUpdate 6");
+    }
+    componentDidWillUnmount(){
+        alert("Child componentDidWillUnmount 7");
+    }
+}

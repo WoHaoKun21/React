@@ -1,42 +1,90 @@
-import { render } from "less";
-import React from "react";
-const App5 = React.createClass({
-    getInitialState:function(){// 给一个state初始值
-        return {
-            name:"迪迦",
-            txt:" ",
-            pwd:" "
-        }
-    },
-    // 自己创建的改变事件
-    handleUse:function(e){
-        console.log(e);
-        this.setState({// 文本框里面的字符串赋值给this.state.txt
-            // 问题：如何获取文本框中的字符串？
-            // 首先获得文本框DOM对象
-            txt:e.target.value
+// 计数器简化版和不简化版
+import React, { Component } from "react";
+// 一、计数器不简化版
+// export default class App5 extends Component {
+//     constructor() {
+//         super();
+//         this.state = {
+//             count: 0
+//         }
+//     }
+//     // 书写的函数
+//     handelAdd() {
+//         let {count} = this.state;
+//         this.setState({
+//             count: count + 1
+//         })
+//     };
+//     handelCut() {
+//         let {count} = this.state;
+//         this.setState({
+//             count: count - 1
+//         })
+//     };
+//     render() {
+//         let { count } = this.state;
+//         return (
+//             <div>
+//                 <h3>App5组件：不简化版计数器</h3>
+//                 <p>计数器：{count}次</p>
+//                 <button onClick={this.handelAdd.bind(this)}>点击计数器+1</button>
+//                 <button onClick={this.handelCut.bind(this)}>点击计数器-1</button>
+//             </div>
+//         );
+//     }
+// }
+
+
+
+
+// 二、简化版计数器
+export default class App5 extends Component {
+    state = {
+        count: 0
+    }
+
+    // 加减函数
+    handelAdd = () => {
+        let { count } = this.state;
+        this.setState({
+            count: count + 1
         });
-    },
-    // 自己创建的改变事件
-    handlePwd:function(e){
-        console.log(e)
-        this.setState({// 文本框里面的字符串赋值给this.state.txt
-            // 问题：如何获取文本框中的字符串？
-            // 首先获得文本框DOM对象
-            pwd:e.target.value
+    }
+    handelCut = () => {
+        let { count } = this.state;
+        this.setState({
+            count: count - 1
         });
-    },
-    render:function(){
-        return(
+    }
+
+    render() {
+        let { count } = this.state;
+        console.log("render");
+        return (
             <div>
-                <h3>App5组件</h3>
-                <p>this.state.tx的值，用户：{this.state.txt}&lt;——为空</p>
-                <p>this.state.tx的值，密码：{this.state.pwd}&lt;——为空</p>
-                <p>this.state.name的值：{this.state.name}</p>
-                用户：<input type="text" onChange={this.handleUse} /><br /> 
-                密码：<input type="password" onChange={this.handlePwd} />
+                <h3>App5组件，简化版计数器</h3>
+                <p>计数器：{count}次</p>
+                <button onClick={this.handelAdd}>点击+1</button>
+                <button onClick={this.handelCut}>点击-1</button>
             </div>
         );
     }
-});
-export default App5;
+    componentDidMount(){
+        // console.log("挂载后的操作，count值：",this.state.count);// 第一个执行
+        // this.setState({count:this.state.count+1});// 第四个执行
+        // console.log("挂载后的操作，count值：",this.state.count);// 第二个执行
+        // this.setState({count:this.state.count+1});// 第五个执行——它会把前面的“第四个执行”覆盖掉，解决：使用this.setState的回调函数
+        // console.log("挂载后的操作，count值：",this.state.count);// 第三个执行
+
+            // 解决多个this.setState被覆盖的问题：使用this.setState的回调函数
+        console.log("挂载后的操作，count值：",this.state.count);// 第一个执行
+        this.setState((prevState,props)=>({
+            count:prevState.count+1
+        }));// 第四个执行
+        console.log("挂载后的操作，count值：",this.state.count);// 第二个执行
+        this.setState((prevState,props)=>({
+            count:prevState.count+1
+        }));// 第五个执行——它会把前面的“第四个执行”覆盖掉，解决：使用this.setState的回调函数
+        console.log("挂载后的操作，count值：",this.state.count);// 第三个执行
+    }
+}
