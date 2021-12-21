@@ -5,7 +5,9 @@ import Item from "./Item";
 export default class App extends Component {
     state = {
         todoDatas: [], // 用来存储所有的todo数组数据
-        todoNum: 0
+        todoNum: 0,
+        view: "all",//过滤状态，all、Active、Completed
+        flag: false // 全选或者全不选
     }
     // 一、 添加todo——自己创建的函数
     addTodo = (e) => {
@@ -32,7 +34,7 @@ export default class App extends Component {
         let { todoDatas, todoNum } = this.state;
         todoDatas = todoDatas.filter(value => {
             if (todo.id === value.id) {
-                if (!todo.hasCompleted) {
+                if (!todo.hasCompleted) {// 默认是false状态，取反为true，会执行这条语句；如果是true的话，取反会变为false，不会执行这条语句
                     todoNum--;
                 }
                 return false;
@@ -47,10 +49,10 @@ export default class App extends Component {
         todoDatas = todoDatas.map(value => {
             if (todo.id === value.id) {
                 value.hasCompleted = !todo.hasCompleted;
-                if(value.hasCompleted){// 返回的true为减
-                    todonum--;
-                }else{// 否则为加
-                    todonum++;
+                if (value.hasCompleted) {// 返回的true为减
+                    todoNum--;
+                } else {// 否则为加
+                    todoNum++;
                 }
             }
             return value;
@@ -59,7 +61,7 @@ export default class App extends Component {
     }
     // 四、 编辑todo——子组件失去焦点改变父组件state
     editTodo = (todo) => {
-        let { todoDatas, todoNum } = this.state;
+        let { todoDatas } = this.state;
         todoDatas = todoDatas.map(value => {
             if (todo.id === value.id) {
                 value.value = todo.value;
@@ -68,17 +70,63 @@ export default class App extends Component {
         });
         this.setState({ todoDatas });
     }
+    // 五、过滤：all、Active、Completed
+    filterTodo = (view) => {
+        this.setState({ view });
+    }
+    // 六、清除完成项目——清除已完成todo
+    clearCompleted = () => {
+        let { todoDatas } = this.state;
+        todoDatas = todoDatas.filter(value => {
+            if (value.hasCompleted) {
+                return false;
+            }
+            return true;
+        });
+        this.setState({ todoDatas });
+    }
+    // 七、全选或者全不选
+    selectAll = () => {
+        let { flag, todoDatas, todoNum } = this.state;
+        flag = !flag;
+        todoDatas = todoDatas.map(value => {
+            if (flag) {
+                value.hasCompleted = true;
+            } else {
+                value.hasCompleted = false
+            }
+            return value;// 没有返回值也会报错
+        });
+        if (flag) {
+            todoNum = 0;
+        } else {
+            todoNum = todoDatas.length;
+        }
+        this.setState({ todoDatas, todoNum, flag });
+    }
 
     // 挂载——————挂载
     render() {
         // 解构数据
-        let { todoDatas,todoNum } = this.state;
-        let { addTodo, delTodo, changeHasCompleted, editTodo } = this;
-        let items = todoDatas.map(todo => {
-            return (<Item todo={todo} key={todo.id} delTodo={delTodo}
-                changeHasCompleted={changeHasCompleted}
-                editTodo={editTodo}
-            />);
+        let { todoDatas, todoNum, view } = this.state;
+        let { addTodo, delTodo, changeHasCompleted, editTodo, filterTodo, clearCompleted, selectAll } = this;
+        let filterTodos = todoDatas.filter(todo => {
+            switch (view) {
+                case "all":
+                    return true;
+                case "active":// “hasCompleted”值为false，要取反，将未完成的保留
+                    return !todo.hasCompleted;// return true
+                case "completed":// “hasCompleted”的值为false，将已完成的消除
+                    return todo.hasCompleted;// return false
+            }
+        });
+        let items = filterTodos.map(todo => {
+            return (
+                <Item todo={todo} key={todo.id} delTodo={delTodo}
+                    changeHasCompleted={changeHasCompleted}
+                    editTodo={editTodo}
+                />
+            );
         })
         return (
             <div className="todoapp">
@@ -87,7 +135,9 @@ export default class App extends Component {
                     <input type="text" className="new-todo" placeholder="What needs to be done!" onKeyUp={addTodo} />
                 </header>
                 <section className="main">
-                    <input type="checkbox" id="toggle-all" className="toggle-all" />
+                    <input type="checkbox" id="toggle-all" className="toggle-all"
+                        onClick={selectAll}
+                    />
                     <label htmlFor="toggle-all"></label>
                     <ul className="todo-list">
                         {
@@ -96,7 +146,7 @@ export default class App extends Component {
                     </ul>
                 </section>
                 <footer>
-                    <Footer todoNum={todoNum}/>
+                    <Footer todoNum={todoNum} filterTodo={filterTodo} view={view} clearCompleted={clearCompleted} />
                 </footer>
             </div>
         );

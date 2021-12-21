@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import Child from "./Child";
 const App = React.createClass({
     // 生命周期三个阶段
-// 第一阶段：初始化阶段
+    // 第一阶段：初始化阶段
     getDefaultProps: function () {
         alert("App getDefaultProps 1");
         // 1、初始化this.props默认值的
@@ -22,15 +22,15 @@ const App = React.createClass({
         alert("App componentWillMount 3");
         // 3、挂在前进行的操作——后面就废弃了
     },
-                // 自己创建的函数:修改this.state的值
-    handleClick:function(){// 创建的函数
+    // 自己创建的函数:修改this.state的值
+    handleClick: function () {// 创建的函数
         // 修改this.state，只能通过异步方法this.setState()才可以
         this.setState({// 修改自身状态的默认值
-            name:"jarry"
+            name: "jarry"
         })
     },
-            // 自己创建的函数:删除目标元素里面的内容
-    handleClick2:function(){
+    // 自己创建的函数:删除目标元素里面的内容
+    handleClick2: function () {
         ReactDOM.unmountComponentAtNode(document.getElementById("app"))
     },
     render: function () {
@@ -48,46 +48,47 @@ const App = React.createClass({
                 }
                 <button onClick={this.handleClick}>点击改变this.state值</button>
                 <hr />
-                <Child z={this.state.name}/>
+                <Child z={this.state.name} />
                 <hr />
                 <button onClick={this.handleClick2}>卸载App组件</button>
             </div>
         );
     },
-    componentDidMount:function(){
+    componentDidMount: function () {
         alert("App componentDidMount 5");
         // 5、初始化阶段完成：可以在这里调用真实DOM，也可以在这里进行ajax请求
         // return {}
         console.dir(document.getElementById("p1"));// 返回的是DOM对象，可以用来进行DOM操作和ajax操作
     },
-// 第二阶段：更新阶段
-    componentWillReceiveProps:function(nextProps){
-        // 6、将要接受新的props
-        alert("App componentWillReceiveProps 6");
-        alert(nextProps);
-    },
-    shouldComponentUpdate:function(x,y){// 覆盖了父类的同名方法，用来进行组件优化
+    // 第二阶段：更新阶段
+    // componentWillReceiveProps:function(nextProps){
+    //     // 6、将要接受新的props
+    //     alert("App componentWillReceiveProps 6");
+    //     alert(nextProps);
+    // },
+    shouldComponentUpdate: function (x, y) {// 覆盖了父类的同名方法，用来进行组件优化
         // 传入的两个参数分别是，nextProps和nextState
-        console.log(x,y);
-        alert("App shouldComponentUpdate 7");
+        console.log(x, y);
+        alert("App shouldComponentUpdate 6");
         // 7、判断是否进入更新阶段
         // 比较算法判断，如果nextProps和this.props不同，返回true，相同返回false
         // 比较算法判断，如果nextState和this.states不同，返回true，相同返回false
-            // if(nextProps === x){
-            //     return false;
-            // }
-            return false;
+        // if(nextProps === x){
+        //     return false;
+        // }
+        return false;
     },
-    componentWillUpdate:function(){
-        alert("App componentWillUpdate 8");
+    componentWillUpdate: function () {
+        alert("App componentWillUpdate 7");
         // 8、将要进行更新
     },
-    componentDidUpdate:function(){
+    // 这里有一个默认的render
+    componentDidUpdate: function () {
         alert("App componentDidUpdate 9");
         // 9、更新完成
     },
-// 第三阶段：卸载阶段
-    componentWillUnmount:function(){
+    // 第三阶段：卸载阶段
+    componentWillUnmount: function () {
         alert("App componentWillUnmount 10");
         // 10、将要卸载的组件
     }

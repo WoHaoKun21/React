@@ -25,7 +25,10 @@ export default class Item extends Component {
         return (
             <li className={editing}>
                 <div className="view">
-                    <input type="checkbox" className="toggle" onChange={() => changeHasCompleted(todo)} />
+                    <input type="checkbox" className="toggle"
+                        onChange={() => changeHasCompleted(todo)}
+                        checked={todo.hasCompleted/* 为true会被选中，false不选中 */}
+                    />
                     <label onDoubleClick={handdleEidt}>{todo.value}</label>
                     <button className="destroy" onClick={() => delTodo(todo)}></button>
                 </div>
@@ -51,11 +54,11 @@ export default class Item extends Component {
                             editTodo(todo);
                             this.setState({
                                 inEdit: false,
-                                flag:false
+                                flag: false
                             });
-                            setTimeout(()=>{
-                                this.setState({flag:true});
-                            },10)
+                            setTimeout(() => {
+                                this.setState({ flag: true });
+                            }, 10)
                         }
                     }}
                 />

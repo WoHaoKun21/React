@@ -4,22 +4,22 @@ const Child = React.createClass({
     //     // 规定this.props.z给的属性必须是number类型，还必须给出
     //     z:React.PropTypes.number.isRequired// 要求给的数据类型必须是number类型
     // },
-    getDefaultProps:function(){
+    getDefaultProps: function () {
         alert("Child getDefaultProps 1");
         return {
-            x:100
+            x: 100
         }
     },
-    getInitialState:function(){
+    getInitialState: function () {
         alert("Child getInitialState 2");
         return {
-            y:200
+            y: 200
         }
     },
-    componentWillMount:function(){
+    componentWillMount: function () {
         alert("Child componentWillMount 3");
     },
-    render:function(){
+    render: function () {
         alert("Child render 4/8");
         return (
             <div>
@@ -30,17 +30,17 @@ const Child = React.createClass({
             </div>
         );
     },
-    componentDidMount:function(){
+    componentDidMount: function () {
         alert("Child componentDidMount 5");
     },
-    componentWillReceiveProps:function(nextProps){
+    componentWillReceiveProps: function (nextProps) {
         alert("Child componentWillReceiveProps 6");
     },
-    shouldComponentUpdate:function(){
+    shouldComponentUpdate: function () {
         alert("Child shouldComponentUpdate 7");
         return true;
     },
-    componentWillUpdate:function(){
+    componentWillUpdate: function () {
         alert("Child componentWillUpdate 8");
     }
 });
