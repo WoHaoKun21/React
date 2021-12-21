@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>登录</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+	<script src="js/public.js"></script>
+	<script src="js/mock.js"></script>
+	<script src="data/data2.js"></script>	
+	<script>
+		$.addEvent(window,"load",function(){
+			let userName = document.getElementById("userName");
+			let pwd = document.getElementById("pwd");
+			let bt1 = document.getElementById("bt1");
+			let tips = document.getElementById("tips");
+			$.addEvent(bt1,"click",function(){
+				$.ajax({
+					url:"check.php",
+					type:"POST",
+					data:JSON.stringify({"userName":userName.value,"pwd":pwd.value}),
+					contentType:"json",
+					dataType:"json",
+					success:function(data){
+						console.log(data);
+						if(data.status==10001){
+							tips.innerText = data.message;
+							setTimeout(function(){
+								tips.innerText = "";
+							},3000);
+						}else{
+							tips.innerText = data.message;
+							setTimeout(function(){
+								tips.innerText = "";
+							},3000);
+						}
+					}
+				})
+			})
+		})
+	</script>
+</head>
+<body>
+	用户：<input type="text" id="userName"><br>
+	密码：<input type="password" id="pwd"><br>
+	<input type="button" value="登录" id="bt1"><span id="tips">*</span>
+</body>
+</html>

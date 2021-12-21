@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mock的测试练习</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/public.js"></script>
+    <script src="./js/mock.js"></script>
+    <script src="./data/data1.js"></script>
+    <script>
+        $.addEvent(window, "load", function () {
+            let app = document.getElementById("app");
+            let bt1 = document.getElementById("bt1");
+            $.addEvent(bt1, "click", function () {
+                app.innerHTML = "";
+                app.className = "loading";
+                $.ajax({
+                    url: "data.php",
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                        data = data.data;
+                        let str = "<ul>";
+                        for (let i in data) {
+                            str += "<li> 学号：" + data[i].sno +
+                                " 姓名：" + data[i].sname +
+                                " 性别：" + data[i].sgender +
+                                " 年龄：" + data[i].sage +
+                                " 系别：" + data[i].sdept + "</li>"
+                        }
+                        app.className = "";
+                        app.innerHTML = str + "</ul>";
+                    }
+                })
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <input type="button" id="bt1" value="获取数据">
+</body>
+
+</html>
