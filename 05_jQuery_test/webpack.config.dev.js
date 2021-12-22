@@ -5,12 +5,12 @@ const { merge } = require('webpack-merge');
 const CopyPlugin = require("copy-webpack-plugin");// 复制文件到指定文件下
 // merge({entry:{},output:{},{module:{}}})
 module.exports = merge(base, {
-    plugins: [
-        new CopyPlugin([{
-            from: __dirname + '/src/json',
-            to: __dirname + '/dist/json'
-        }])
-    ],
+    // plugins: [
+    //     new CopyPlugin([{
+    //         from: __dirname + '/src/json',
+    //         to: __dirname + '/dist/json'
+    //     }])
+    // ],
     module: {
         rules: [
             {

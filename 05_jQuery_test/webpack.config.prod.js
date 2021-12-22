@@ -22,7 +22,7 @@ module.exports = merge(base, {
                 }, {
                     loader: 'css-loader',
                     options: {
-                        modules: true// 是否开启模块化
+                        modules: false// 是否开启模块化
                     }
                 }]
             },

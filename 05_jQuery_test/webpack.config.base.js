@@ -4,6 +4,7 @@ const path = require("path");
 const htmlWebpackPlugin = require("html-webpack-plugin");// html文件生成模块
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const WebpackBar = require("webpackbar");// 引入进度条显示
+// const CopyPlugin = require("copy-webpack-plugin");
 module.exports = {
     // 入口文件
     entry: {
@@ -27,6 +28,10 @@ module.exports = {
         }),
         new CleanWebpackPlugin(),
         new WebpackBar(),// 进度条显示
+        // new CopyPlugin([{
+        //     from: __dirname + '/src/json',
+        //     to: __dirname + '/dist/json'
+        // }])
     ],
     module: {
         rules: [

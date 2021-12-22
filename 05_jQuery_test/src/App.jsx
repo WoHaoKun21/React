@@ -1,17 +1,22 @@
 import React, { Component } from "react";
 import $ from "jquery";
+// // 加载mock数据
+// import "./mock/data";
+import "./css/style";
 export default class App extends Component {
     state = {
-        data: []
+        data: [],
+        loading:false
     }
     render() {
-        let { data } = this.state;
+        let { data, loading } = this.state;
+        let className = loading?"loading":"";
         return (
             <div>
                 <h3>App组件</h3>
                 <button id="bt1">点击获取数据</button>
                 <div>
-                    <ul>
+                    <ul className={className}>
                         {
                             data.map(value => {
                                 return (
@@ -31,13 +36,15 @@ export default class App extends Component {
     }
     componentDidMount() {
         $("#bt1").click(() => {
+            this.setState({loading:true});
             $.ajax({
-                url: "./json/data.json",
+                url: "data.php",
                 type: "GET",
                 dataType: "json",
                 success: (data) => {
                     this.setState({
-                        data:data.data
+                        data:data.data,
+                        loading:false
                     })
                 }
             })
