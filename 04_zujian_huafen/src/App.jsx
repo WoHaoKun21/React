@@ -132,7 +132,7 @@ export default class App extends Component {
             <div className="todoapp">
                 <header className="header">
                     <h1>Todos</h1>
-                    <input type="text" className="new-todo" placeholder="What needs to be done!" onKeyUp={addTodo} />
+                    <input type="text" className="new-todo" placeholder="What needs to be done？" onKeyUp={addTodo} />
                 </header>
                 <section className="main">
                     <input type="checkbox" id="toggle-all" className="toggle-all"

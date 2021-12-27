@@ -424,7 +424,64 @@
         解决：安装一个拷贝插件，将data.json从src拷贝到dist目录
 
 
+                                第三章：fetch
+    一、fetch 就是对jQuery的$.ajax()的promise进行封装
+        propmise对象：
+            promise对象.then().catch();
+            4个API：then();catch();all();race()
+        fetch对象：————————>已经成为浏览器的内置对象，无需安装第三方包
+            promise对象.
+            then(response=>{
+                // response响应对象---API
+                return response.text()// response.json()
+            }).
+            then(data=>{
+                返回的数据对应：response.json()和response.text()
+            }).catch(error=>{报错})
+        axios对象：
+            promise对象.
+            then(response=>{
+                // response响应对象---API
+                return response.text()// response.json()
+            }).
+            then(data=>{
+                返回的数据对应：response.json()和response.text()
+            }).catch(error=>{报错})
+      实验：fetch
+        1、静态mock实验：——————————>06_fetch_axios_test
+          ①fetch获得文本数据——>App.jsx
+          ②fetch获得json数据——>App2.jsx
+          ③fetch发送urlencoded数据进行登录——>App3.jsx
+          ④fetch发送formDate数据进行登录——>App4.jsx
+          ⑤fetch发送json数据进行登录——>App5.jsx————需要将dev-server配置项的目标地址进行转换
 
-        
+    二、axios 是对原生js的promise封装
+        用法：axios()
+            .then(res=>{
+                // res就是响应对象
+                // res.data是数据
+            })
+            .catch(error=>{alert(错误信息)})
+        1、axios概述：
+          axios是一个基于Promise用于浏览器和nodejs的HTTP客户端！
+        2、特点：
+          ①在浏览器中创建XMLHttpRequest
+          ②从node.js发出http请求
+          ③支持Promise API
+          ④拦截请求和响应
+          ⑤转换请求和相应数据
+          ⑥取消请求
+          ⑦自动转换JSON数据
+          ⑧客户端支持防止CSRF/XSRF(跨站请求伪造)
+        3、实验：
+            1、get请求：axios不带参数请求静态mockjs的json——>Axios.jsx
+            2、get请求：axios带参数请求静态mockjs的JSON数据——>Axios2.jsx
+            3、post请求：带参数请求动态mock数据json——>Axios3.jsx
+                说明：axios默认发送和接受的都是json数据
+            4、登录验证——>Axios4.jsx
+            5、多个并发请求——>Axios5.jsx
+          说明：如果发送数据的话，get方法会被拦截，引为发送的数据会放在url后面，拦截不了；post则不会，因为它是将数据放在body中
+
+
 </body>
 </html>

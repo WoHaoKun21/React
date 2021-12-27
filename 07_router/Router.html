@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React_Router路由器</title>
+</head>
+<body>
+                            第四章：React_Router
+    一、react技术栈/react全家桶
+        1、jsx语法：使用xml/xhtml快速生成虚拟DOM
+        2、React生命周期方法，也叫react生命周期的钩子(hook)
+            --钩子：到某个阶段就把它钩进来
+        3、React-router：路由
+        4、Redux
+        5、Dva——需要手动配置(阿里巴巴的云谦开发的)
+        6、umi——按照约定自动生成了，不用配置(阿里巴巴的云谦开发的)
+        7、Ant design——阿里巴巴的蚂蚁金服开发的UI库
+        8、React hooks
+        9、Typescript——Microsoft(微软)开发
+            --javascript的两大缺陷：
+                ①：预编译阶段没有类型检查
+                ②：面向对象编程支持不完整
+
+    二、React-Router4概述
+        --路由库React-Router2、4它是官方维护的，事实上也是唯一可选的路由器。它通过管理URL，实现组件的切换和状态的变化
+        --React Router V4遵循了React的理念：万物皆组件。因此升级后的Route、Link、Switch等都是一个普通的组件
+        --React Router代码库包括：
+            ①：react-router 实现了路由的核心功能；
+            ②：react-router-dom 网站应用开发提供组件和函数——做网站用
+            ③：react-router-native 做App开发用
+            ④：react-router-redux React Router和Redux的集成
+            ⑤：react-router-config 静态路由配置帮助助手
+          说明：网站应用开发不能直接安装react-router，这个包为React Router应用提供了核心的路由组件和函数，另外两个包
+                提供了特定环境的组件(浏览器和react-router对应的平台)，不过它们也是将react-router导出的模块再次导出
+
+    三、应用application按照页面内容分为两类：
+        第一类：多页应用--整个应用根据内容和功能分为多个页面构成
+                例：天猫、京东、网易：通过超链接“<a></a>”组织页面
+            优势：页面承载内容多；
+                  有利于SEO搜索引擎优化
+            缺点：页面初次加载，网速不好的话，容易出现白屏；
+                  页面切换需要加载整个页面，网速不好的话，容易出现白屏
+        第二类：单页应用--SPA(single page app)：整个应用只有一个HTML页面，所有页面元素全都通过js操作DOM生成
+            技术：react、vue、js框架
+            使用：使用react/vue路由，通过改变地址栏地址(有可能是内存地址——地址栏不变)，实现组件切换或同一个组件
+                  的状态切换
+            优势：组件切换或组件状态切换不会出现白屏；
+                  感受更像app，可以用来开发我们的混合式app(hybird App)
+            缺点：所有DOM解构都是通过js动态生成的——不利于SEO搜索引擎
+                  和多页应用一样，加载首屏网速不好会出现白屏
+    
+    四、React-Router 功能：通过(地址栏)地址切换实现组件切换或同一个组件不同状态的切换
+
+    五、react-router-dom提供的组件
+        1、HashRouter组件：用于创建Hash类型路由#，兼容老浏览器
+            原理：基于ES3 location.hash，通过锚点切换实现组件切换；用户可以在地址栏手动改变地址，来进行
+                 组件或状态切换
+        2、BrowserRouter组件：用户创建Browser类型路由不带#
+            原理：使用HTML5 history API(pushState,replaceState,popState)来使你的内容随着url动态改变的
+            注意：BrowserRouter组件，不能通过地址栏手动改变
+        3、NavLink组件
+        4、Link组件
+
+    六、Router组件
+        1、引入Router相关组件
+            import {BrowserRouter as Router,Route,Link,NavLink} from "react-router-dom";
+        2、React-Router支持高级路由组件
+            --BrowserRouter：使用HTML5提供的history API来保持UI和URL的同步；
+            --HashRouter：使用URL的hash(如：location.hash)来保持UI和URL的同步
+            --MemoryRouter：能在内存保存你“URL”的历史记录(并没有对地址栏读写)；
+            --NativeRouter：为使用React Native提供路由支持
+            --StaticRouter：从不会改变地址
+          说明：Router组件下只允许存在一个子元素，如存在多个则会报错
+
+    七、Route组件
+        1、Route组件主要作用就是当一个location匹配路由的path时，渲染某些UI
+        2、例如：
+            <Router>// 这个是路由表
+                <div>// Router下只允许一个子元素存在，所以加个div，将里面所有的路由
+                    <Route exact path="/" component={Home} />// 路由
+                    <Route path="/news" component={News} />// 路由
+                </div>
+            </Router>
+        3、<Route/>组件有三种属性：
+            (1)path(string)：路由匹配路径(没有path属性的Route总是会匹配)；
+            (2)exact(bool)：为true时，则要求路径与location.pathname必须完全匹配；
+            (3)strict(bool)：true的时候，结尾有斜线的路径,只能匹配有斜线的location.pathname；
+        4、<Route/>组件，有三种渲染方式：
+            (1)<Route component/>：在地址匹配的时候React的组件才会被渲染，Route props也会随着一起被渲染
+            (2)<Route render/>：这种方式对于内联渲染和包装组件却不引起意料之外的重新挂载特别方便
+            (3)<Route children/>：与render属性的工作方式基本一样，除了它是不管地址匹配与否都会被调用；
+
+    八、webpack插件分为两种：
+        1、内置插件：即自带的，不需要安装和引用，可以直接使用；
+        2、第三方插件：需要npm安装，require饮用后才可以使用；
+
+    九、react 属性延展：react语法“babel-loader”进行编译
+        功能：将对象的“属性:值”延展成组建的属性值
+            例：let obj = {name:"tom",age:19,sex:"男"}
+            子组件：App.jsx：
+                <div>
+                    <Child name={obj.name} age={obj.age} sex={obj.sex} />
+                    <Child {...obj} /> // 等价于上面的写法
+                </div>
+    
+    十、
+
+
+</body>
+</html>
